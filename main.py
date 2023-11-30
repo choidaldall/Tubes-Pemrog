@@ -19,6 +19,10 @@ pygame.display.set_icon(icon)
 mixer.music.load("background.wav")
 mixer.music.play(-1)
 
+# Sound effects
+bullet_sound = mixer.Sound("laser.wav")
+explosion_sound = mixer.Sound("explosion.wav")
+
 # Sprite groups
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
@@ -45,6 +49,7 @@ class Player(pygame.sprite.Sprite):
             all_sprites.add(bullet)
             self.bullets.add(bullet)
             bullets.add(bullet)
+            bullet_sound.play()  # Mainkan suara tembakan
 
     def update(self):
         self.rect.x += self.x_change
@@ -67,7 +72,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.x_change = 4
+        self.x_change = 5
         self.y_change = 40
 
     def update(self):
@@ -87,7 +92,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.y_change = 5
+        self.y_change = 1
 
     def update(self):
         self.rect.y -= self.y_change
@@ -128,6 +133,7 @@ class Game:
 
         hits = pygame.sprite.groupcollide(self.enemies, bullets, True, True)
         for hit in hits:
+            explosion_sound.play()  # Mainkan suara ledakan
             self.score += 1
             enemy = Enemy(random.randint(0, 736), random.randint(50, 150))
             self.enemies.add(enemy)
@@ -152,9 +158,9 @@ class Game:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        self.player.move(-5)
+                        self.player.move(-4)
                     elif event.key == pygame.K_RIGHT:
-                        self.player.move(5)
+                        self.player.move(4)
                     elif event.key == pygame.K_SPACE:
                         self.player.shoot()
 
