@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 480
         self.x_change = 0
         self.bullets = pygame.sprite.Group()  # Grup untuk melacak peluru
-        self.max_bullets = 2  # Batasan jumlah peluru
+        self.max_bullets = 4  # Batasan jumlah peluru
 
     def move(self, direction):
         self.x_change = direction
@@ -92,7 +92,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.y_change = 1
+        self.y_change = 3
 
     def update(self):
         self.rect.y -= self.y_change
