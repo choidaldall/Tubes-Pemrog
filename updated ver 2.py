@@ -82,6 +82,10 @@ class Player(pygame.sprite.Sprite):
         if self.bullet_cooldown > 0:
             self.bullet_cooldown -= 1
 
+        # Reset y_change to 0 when KEYUP event for up or down arrow keys is detected
+        if self.y_change != 0 and (self.rect.y == 0 or self.rect.y == 536):
+            self.y_change = 0
+
 # Enemy class
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -148,6 +152,9 @@ class Game:
         # Reset player position
         self.player.rect.x = 370
         self.player.rect.y = 480
+
+        # Reset player y_change to 0
+        self.player.y_change = 0
 
         # Remove all bullets
         bullets.empty()
